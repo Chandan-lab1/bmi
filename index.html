@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“बेनी नगरपालिका स्वास्थ्य शाखाको BMI Portal मा स्वागत छ”</title>
+    <style>
+        @font-face {
+            font-family: 'Kokila';
+            src: url('https://fonts.gstatic.com/ea/kalimati/v3/NotoSerifDevanagari-Bold.ttf') format('truetype');
+        }
+        body {
+            font-family: 'Kokila', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007BFF;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 1s ease, color 0.5s ease;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .fade-in {
+            opacity: 1;
+        }
+
+        .normal {
+            color: #28A745;
+        }
+
+        .overweight, .obese {
+            color: #DC3545;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>“बेनी नगरपालिका स्वास्थ्य शाखाको BMI Portal मा स्वागत छ”</h1>
+        <h2>“मेरो स्वास्थ्य मेरो जिम्मेवारी”</h2>
+
+        <label for="height">उचाइ (से.मी.):</label>
+        <input type="number" id="height" placeholder="उचाइ राख्नुहोस्">
+
+        <label for="weight">तौल (के.जी.):</label>
+        <input type="number" id="weight" placeholder="तौल राख्नुहोस्">
+
+        <button onclick="calculateBMI()">BMI पत्ता लगाउनुहोस्</button>
+
+        <div class="result" id="result"></div>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            var height = document.getElementById('height').value;
+            var weight = document.getElementById('weight').value;
+
+            if (height > 0 && weight > 0) {
+                var heightInMeters = height / 100;
+                var bmi = weight / (heightInMeters * heightInMeters);
+                bmi = bmi.toFixed(2);
+
+                var result = document.getElementById('result');
+                var feedback = document.getElementById('feedback');
+                
+                // Reset classes
+                result.className = "result fade-in";
+                feedback.innerHTML = "";
+
+                result.innerHTML = "तपाईंको BMI: " + bmi;
+
+                if (bmi < 18.5) {
+                    feedback.innerHTML = "तपाईं दुब्लो हुनुहुन्छ। स्वस्थ तौल पाउनको लागि पोषिलो आहार खानुहोस् र आफ्नो स्वास्थ्यमा ध्यान दिनुहोस्।";
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    result.classList.add("normal");
+                    feedback.innerHTML = "तपाईंको तौल सामान्य छ। यस्तै स्वास्थ्यलाई कायम राख्न स्वस्थ जीवनशैली अपनाउनुहोस्।";
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    result.classList.add("overweight");
+                    feedback.innerHTML = "तपाईं थोरै मोटा हुनुहुन्छ। स्वस्थ तौल कायम गर्न नियमित व्यायाम गर्नुहोस् र खानपानमा ध्यान दिनुहोस्।";
+                } else {
+                    result.classList.add("obese");
+                    feedback.innerHTML = "तपाईं मोटो हुनुहुन्छ। तौल घटाउन डाक्टरको सल्लाह लिनुहोस् र स्वस्थ जीवनशैली अपनाउनुहोस्।";
+                }
+            } else {
+                alert("कृपया सहि उचाइ र तौल राख्नुहोस्।");
+            }
+        }
+    </script>
+
+</body>
+</html>
